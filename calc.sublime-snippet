@@ -1,0 +1,103 @@
+<snippet>
+	<content><![CDATA[
+class Calc
+{
+    public:
+        vector<ll> sieveData;
+        Calc()
+        {
+            //for sqrtn logic;
+        }
+        Calc(ll n)
+        {
+            sieveData = vector<ll>(n+1, 0);
+            for(ll i =1; i<=n; i++)
+            {
+                sieveData[i] = i;
+            }
+            for(int i=2; i<=sqrt(n); i++)
+            {
+                if(i == sieveData[i])
+                {
+                    for(int j=i; j<=n; j+=i)
+                    {
+                        if(sieveData[j] == j)
+                            sieveData[j] = i;
+                    }
+                }
+            }
+        }
+        ll fastPower(ll a, ll b)
+        {
+            if(b==0){return 1;}
+            if(b%2==0){return fastPower(a,b/2)*fastPower(a,b/2);}
+            return fastPower(a,b-1)*a;
+        }
+        bool sqIsPrime(ll n)
+        {
+            if(n==2)return true;
+            if(n<=1)return false;
+            if(n<=3)return true;
+            if(n%2==0 || n%3==0)return false;
+            for(int i=5;i*i<=n;i=i+6)
+            if(n%i==0 || n%(i+2)==0)return false;
+            return true;
+        }
+        vector<ll> sqPrimeFactors(ll n)
+        {
+            vector<ll> temp;
+            for(ll i=2; i<=sqrt(n); i++)
+            {
+                if(sqIsPrime(i) and n % i == 0)
+                    temp.push_back(i);            
+            }
+            return temp;
+        }
+        vector<ll> sqlAllFactors(ll n)
+        {
+            vector<ll>temp;
+            for(ll i=2; i<=sqrt(n); i++)
+            {
+                if(n % i == 0)
+                {
+                    if(n % (n/i) == 0 and i != (n/i))
+                        temp.push_back(n/i);
+                    temp.push_back(i);
+                }
+            }
+            sort(temp.begin(), temp.end());
+            return temp;
+        }
+        bool logIsPrime(ll n)
+        {
+            ll sieveDataSize = sieveData.size();
+            if(n > sieveDataSize)
+                return false;
+            return sieveData[n] == n;
+        }
+        vector<ll> logPrimeFactors(ll n)
+        {
+            unordered_map<ll, int>visited;
+            vector<ll>temp;
+            while(n > 1)
+            {
+                if(!visited[sieveData[n]])
+                {
+                    visited[sieveData[n]]++;
+                    temp.push_back(sieveData[n]);
+                }
+                n = n / sieveData[n];
+            }
+            return temp;
+        }
+        ll gcd(ll a, ll b)
+        {
+            return __gcd(a, b);
+        }
+};
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>calc</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

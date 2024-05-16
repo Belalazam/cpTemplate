@@ -1,0 +1,54 @@
+<snippet>
+	<content><![CDATA[
+//In the name of Allah, The Most Gracious and The Most Merciful
+#include<bits/stdc++.h>
+#ifdef ONLINE_JUDGE
+#define debug(...) void(0);
+#else
+#include "debug.hpp"
+#endif
+#define gcd __gcd
+#define ll long long
+using namespace std;
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+void ideSetup() {
+    #ifndef ONLINE_JUDGE
+        freopen("./input.txt", "r", stdin);
+        //freopen("./output.txt", "w", stdout);
+        freopen("./error.txt", "w",stderr);
+    #endif
+}
+void fastIoAndSetupIDE()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    ideSetup();
+}
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+void solution()
+{
+         cout<<1;   
+}
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+int32_t main()
+{
+    fastIoAndSetupIDE();
+    int t;
+    // if no test case default is one
+    t=1;
+    cin>>t;
+    while(t--)
+    {
+        solution();
+        cout<<"\n";
+    }
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>code</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

@@ -1,0 +1,105 @@
+<snippet>
+    <content><![CDATA[
+class segTreeConditional
+{
+    public:
+    vector<ll> data;
+    unordered_map<ll, unordered_map<ll, ll>>segTree;
+    segTreeConditional(vector<ll>& vec)
+    {
+        data = vec;
+        int n = data.size();
+        buildSegTree(0, n-1);
+    }
+    void buildSegTree(ll low, ll high)
+    {
+        if(low == high)
+        {
+            segTree[low][high] = data[low];
+            return;
+        }
+        ll mid = low + (high - low)/2;
+        segTree[low][high] = helper(low, high);
+        buildSegTree(low, mid);
+        buildSegTree(mid+1, high);
+    }
+
+    ll helper(ll low, ll high)
+    {
+        return 1;
+    }
+};
+class SegTreeSum
+{
+    public:
+
+        ll qIndex, diff, qLow, qHigh;
+        vector<ll>data;
+        unordered_map<ll, ll>segTree;
+        SegTreeSum(ll n, vector<ll>& vec)
+        {
+            data = vec;
+            buildSegTree(0, n-1, 0);
+        }
+        ll buildSegTree(ll low, ll high, ll index)
+        {
+            if(low == high)
+            {
+                segTree[index] = data[low];
+                return segTree[index];
+            }
+            ll mid = low + (high-low)/2;
+            segTree[index] = 
+                buildSegTree(low, mid, index*2 +1) 
+                + buildSegTree(mid+1, high, index*2 +2);
+            return segTree[index];
+        }
+        ll get(ll qlow, ll qhigh)
+        {
+            qLow = qlow;
+            qHigh = qhigh;
+            return getSegmentTree(0, data.size()-1, 0);
+        }
+        ll getSegmentTree(ll low, ll high, ll index)
+        {
+            if(qLow > high or qHigh < low)
+                return 0;
+            if(qLow <= low and qHigh >= high)
+                return segTree[index];
+    
+            ll mid = low + (high - low)/2;
+            return getSegmentTree(low, mid, index*2 +1) 
+                    + getSegmentTree(mid+1, high, index*2 +2);
+        }
+        void update(ll qi, ll value)
+        {
+            diff = value - data[qi];
+            data[qi] = value;
+            qIndex = qi;
+            updateSegTree(0, data.size()-1, 0);
+        }
+        void updateSegTree(ll low, ll high, ll index)
+        {
+            if(qIndex < low or qIndex > high)
+                return; 
+            if(low == high)
+            {
+                if(low == qIndex)
+                {
+                    segTree[index] += diff;
+                }
+                return;
+            }
+               
+            segTree[index] += diff;
+            ll mid = low + (high-low)/2;
+            updateSegTree(low, mid, index*2 +1);
+            updateSegTree(mid+1, high, index*2 +2);
+        }
+};
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>segtree</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.c++</scope>
+</snippet>

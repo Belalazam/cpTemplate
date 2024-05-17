@@ -3,33 +3,33 @@
 class Dsu
 {
     public:
-        vector<int> parent;
-        vector<int> rank;
-        Dsu(int n)
+        vector<ll> parent;
+        vector<ll> rank;
+        Dsu(ll n)
         {
-            rank = vector<int>(n+1, 0);
-            for(int i=0;i<=n;i++)
+            rank = vector<ll>(n+1, 0);
+            for(ll i=0;i<=n;i++)
             {
                 parent.push_back(i);
             }
         }
-        int findParent(int z)
+        ll findParent(ll z)
         {
             if(parent[z] == z)
                     return parent[z];
             parent[z] = findParent(parent[z]);
             return parent[z];
         }
-        bool isFriend(int friend1, int friend2)
+        bool isFriend(ll friend1, ll friend2)
         {
-            int parent1 = findParent(friend1);
-            int parent2 = findParent(friend2);
+            ll parent1 = findParent(friend1);
+            ll parent2 = findParent(friend2);
             return parent1 == parent2;   
         }
-        void makeFriend(int friend1, int friend2)
+        void makeFriend(ll friend1, ll friend2)
         {
-            int parent1 = findParent(friend1);
-            int parent2 = findParent(friend2);
+            ll parent1 = findParent(friend1);
+            ll parent2 = findParent(friend2);
 
             if(parent1 == parent2)
                     return;

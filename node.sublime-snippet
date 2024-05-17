@@ -1,0 +1,38 @@
+<snippet>
+    <content><![CDATA[
+struct TreeNode
+{
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int value)
+    {
+        val = value;
+        left = NULL;
+        right = NULL;
+    }
+};
+struct LinkNode
+{
+    int val;
+    LinkNode* next;
+    LinkNode* prev;
+    LinkNode(int value)
+    {
+        val = value;
+        next = NULL;
+        prev = NULL;
+    }
+};
+struct TrieNode
+{
+    vector<int> &data;
+    unordered_map<int, TrieNode*> find;
+    unordered_map<int, int> flag;
+};
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>node</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.c++</scope>
+</snippet>

@@ -1,0 +1,40 @@
+<snippet>
+    <content><![CDATA[
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+
+struct setComparator 
+{
+    bool operator()(int a,int b) const 
+    {
+        return a < b;
+    }
+};
+#define findNth find_by_order
+#define lowerBound order_of_key 
+template <typename T>
+class Cset
+{
+    public:
+        set<T>st;
+        multiset<T>mst;
+        tree<T, null_type,less<T>, rb_tree_tag,tree_order_statistics_node_update> ost;        
+        tree<T, null_type,less_equal<T>, rb_tree_tag,tree_order_statistics_node_update> most;        
+
+        // applies for ost and most;
+        //ost.insert(T);
+        // *(ost.find_by_order(3)) -> gives 3rd smallest element
+        //   ost.order_of_key(4) -> find the number of key strictly less than 4
+        //   ost.erase(ost.find(2)) -> deleting 2 from oset
+        //   less_equal<T> or less_equal is swapable by customComparator
+
+        // to pass custom comparator for st or mst set<int, customComparator> st;
+
+};
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>cset</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.c++</scope>
+</snippet>

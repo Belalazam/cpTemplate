@@ -1,0 +1,163 @@
+<snippet>
+	<content><![CDATA[
+class Graph
+{
+    public:
+    ll ed = 0;
+    ll ve = 0;
+    unordered_map<ll, vector<ll>>grid;
+    unordered_map<ll, unordered_map<ll, ll>> weight;
+    Graph(unordered_map<ll, vector<ll>> &temp, unordered_map<ll, unordered_map<ll, ll>> &weigh, ll tempEdge, ll tempVertices)
+    {
+        grid =  temp;
+        ed = tempEdge;
+        ve = tempVertices;
+        weigh = weigh;
+    }
+
+    vector<ll> topoSort() 
+    {
+        vector<ll>ans;
+        queue<ll>q;
+        unordered_map<ll, ll>indegree;
+       
+        for(auto i: grid)
+        {
+            for(auto j: i.second)
+            {
+                indegree[j]++;
+            }
+        }
+        for(ll i=0; i<ve; i++)
+        {
+            if(indegree[i] == 0)
+            {
+                q.push(i);
+            }
+        }
+        while(q.size())
+        {
+            ll z = q.front();
+            q.pop();
+            ans.push_back(z);
+            for(auto i: grid[z])
+            {
+                indegree[i]--;
+                if(indegree[i] == 0)
+                    q.push(i);
+            }
+        }
+        if(q.size())
+            return {-1};
+        return ans;
+    }
+
+    void dfs(ll x, unordered_map<ll, vector<ll>> &grid,ll mode, stack<ll> &stk, unordered_map<ll, ll> &visited)
+    {
+         visited[x]++;
+         for(auto i:grid[x])
+         {
+             if(visited[i]==0)
+                dfs(i, grid, mode, stk, visited);
+         }
+         if(mode==1)
+            stk.push(x);
+    }
+
+    // kosaraju's
+    ll stronglyConnectedCount()
+    {
+        stack<ll>stk;
+        unordered_map<ll, ll> visited;
+        for(ll i=0;i<ve;i++)
+        {
+            if(visited[i]==0)
+                dfs(i, grid, 1, stk, visited);
+        }
+        unordered_map<ll, vector<ll>>vec;
+        for(ll i=0; i<ve; i++)
+        {
+             for(auto j: grid[i])
+             {
+                 vec[j].push_back(i);
+             }
+        }
+        ll counter=0;
+        visited.clear();
+        while(stk.size()>0)
+        {
+            if(visited[stk.top()]==0)
+            {
+                counter++;
+                dfs(stk.top(), vec, 2, stk, visited);
+            }
+            stk.pop();
+        }
+        return counter;  
+    }
+
+    //dijkstra
+    vector<ll> shorteshPathFromOneToAllOnlyPositveEdges(ll source)
+    {
+        set<vector<ll>>st;
+        vector<ll>dis(ve, INT_MAX);
+        dis[source] = 0;
+        st.insert({0, source});
+        while(st.size())
+        {
+            vector<ll>temp = *(st.begin());
+            st.erase(st.begin());
+            ll w = temp[0], u = temp[1];
+            for(auto v: grid[u])
+            {
+                if(dis[v] > weight[u][v] + w)
+                {
+                    dis[v] = weight[u][v] + w;
+                    st.insert({dis[v], v});
+                }
+            }
+        }
+        return dis;
+    }
+
+    //BellmanFord
+    vector<ll> shorteshPathFromOneToAllAlsoNegativeEdges(ll source)
+    {
+        vector<ll>ans(ve, INT_MAX);
+        ans[source] = 0;
+        int n = grid.size();
+        for(int i=0;i<ve-1;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                    ll u = grid[j][0];
+                    ll v = grid[j][1];
+                    ll w = weight[u][v];
+                    if(ans[u] != INT_MAX and (ans[u]+w) < ans[v])
+                    {
+                        ans[v] = ans[u]+w;
+                    }
+            }
+        }
+        for(int i=0;i<ve-1;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                    ll u = grid[j][0];
+                    ll v = grid[j][1];
+                    ll w = weight[u][v];
+                    if(ans[u] != INT_MAX and (ans[u]+w) < ans[v])
+                    {
+                        return {-1};
+                    }
+            }
+        }
+        return ans;
+    }
+};
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>graph</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

@@ -1,0 +1,68 @@
+<snippet>
+	<content><![CDATA[
+class Sqd
+{
+    public:
+    vector<list<int>> fillVecList(vector<int>& vec)
+    {
+        vector<list<int>>vecList;
+        int n = vec.size(); int m = sqrt(n);
+        list<int>temp;
+        for(int i=1; i<=n; i++)
+        {
+            temp.push_back(i);
+            if(i%m == 0)
+            {
+                vecList.push_back(temp);
+                temp.clear();
+            }
+        }    
+        if(temp.size())
+            vecList.push_back(temp);
+        return vecList;
+    }
+
+    vector<multiset<int>> fillVecMst(vector<int>& vec)
+    {
+        vector<multiset<int>>vecMst;
+        int n = vec.size(); int m = sqrt(n);
+        multiset<int> temp;
+        for(int i=1; i<=n; i++)
+        {
+            temp.insert(i);
+            if(i%m == 0)
+            {
+                vecMst.push_back(temp);
+                temp.clear();
+            }
+        }    
+        if(temp.size())
+            vecMst.push_back(temp);
+        return vecMst;
+    }
+
+    vector<vector<int>> fillVecVec(vector<int>& vec)
+    {
+        vector<vector<int>>vecVec;
+        int n = vec.size(); int m = sqrt(n);
+        vector<int>temp;
+        for(int i=1; i<=n; i++)
+        {
+            temp.push_back(i);
+            if(i%m == 0)
+            {
+                vecVec.push_back(temp);
+                temp.clear();
+            }
+        }    
+        if(temp.size())
+            vecVec.push_back(temp);
+        return vecVec;
+    }    
+};
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>sqd</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>
